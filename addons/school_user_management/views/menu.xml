@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <!-- Internal users only — excludes portal/public accounts -->
+    <record id="action_school_users" model="ir.actions.act_window">
+        <field name="name">Users Management</field>
+        <field name="res_model">res.users</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('share', '=', False)]</field>
+    </record>
+
+    <!-- School roles only — excludes system/sales/accounting roles -->
+    <record id="action_school_roles" model="ir.actions.act_window">
+        <field name="name">Role Management</field>
+        <field name="res_model">res.users.role</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('implied_ids.category_id.name', '=', 'School Management')]</field>
+    </record>
+
     <!-- App root — tile on home screen -->
     <menuitem
         id="menu_school_user_mgmt_root"
@@ -9,32 +25,19 @@
         web_icon="school_user_management,static/description/icon.svg"
         groups="school_management.group_school_admin"/>
 
-    <!-- Role Management -->
     <menuitem
-        id="menu_school_roles_section"
+        id="menu_school_users"
+        name="Users Management"
+        parent="menu_school_user_mgmt_root"
+        action="action_school_users"
+        groups="school_management.group_school_admin,school_management.group_school_principal"
+        sequence="10"/>
+
+    <menuitem
+        id="menu_school_roles"
         name="Role Management"
         parent="menu_school_user_mgmt_root"
-        sequence="10"/>
-
-    <menuitem
-        id="menu_school_roles_list"
-        name="Roles"
-        parent="menu_school_roles_section"
-        action="school_user_management.action_school_roles"
-        sequence="10"/>
-
-    <!-- User Management -->
-    <menuitem
-        id="menu_school_users_section"
-        name="User Management"
-        parent="menu_school_user_mgmt_root"
+        action="action_school_roles"
+        groups="school_management.group_school_admin,school_management.group_school_principal"
         sequence="20"/>
-
-    <menuitem
-        id="menu_school_users_list"
-        name="Users"
-        parent="menu_school_users_section"
-        action="school_user_management.action_school_users"
-        sequence="10"/>
-
 </odoo>

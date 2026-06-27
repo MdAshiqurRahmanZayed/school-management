@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <!-- Restrict Odoo Apps catalog to system admins only -->
+    <record id="base.open_module_tree" model="ir.actions.act_window">
+        <field name="groups_id" eval="[(6, 0, [ref('base.group_system')])]"/>
+    </record>
+
+
     <!-- Root app menu — shows as tile on home screen -->
     <menuitem
         id="menu_school_root"
@@ -8,20 +14,35 @@
         sequence="10"
         web_icon="school_management,static/description/icon.svg"/>
 
-    <!-- Configuration — admin + principal -->
     <menuitem
-        id="menu_school_config"
-        name="Configuration"
+        id="menu_school_teacher"
+        name="Teachers"
         parent="menu_school_root"
-        groups="school_management.group_school_admin,school_management.group_school_principal"
-        sequence="100"/>
+        action="school_management.action_school_teacher"
+        groups="school_management.group_school_teacher"
+        sequence="10"/>
 
-    <!-- School Info under Configuration -->
+    <menuitem
+        id="menu_school_student"
+        name="Students"
+        parent="menu_school_root"
+        action="school_management.action_school_student"
+        groups="school_management.group_school_teacher,school_management.group_school_accountant"
+        sequence="20"/>
+
+    <menuitem
+        id="menu_school_admission"
+        name="Admissions"
+        parent="menu_school_root"
+        action="school_management.action_school_admission"
+        groups="school_management.group_school_teacher"
+        sequence="30"/>
+
     <menuitem
         id="menu_school_info"
         name="School Information"
-        parent="menu_school_config"
+        parent="menu_school_root"
         action="school_management.action_school_info"
         groups="school_management.group_school_admin,school_management.group_school_principal"
-        sequence="1"/>
+        sequence="90"/>
 </odoo>

@@ -1,2 +1,2 @@
 # ruff: noqa: F401
-from . import school_info
+from . import admission, school_info, student, teacher
