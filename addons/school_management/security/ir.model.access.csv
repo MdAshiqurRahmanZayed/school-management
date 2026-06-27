@@ -1,1 +1,6 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_school_info_admin,school.info.admin,model_school_info,school_management.group_school_admin,1,1,1,1
+access_school_info_principal,school.info.principal,model_school_info,school_management.group_school_principal,1,1,0,0
+access_school_info_teacher,school.info.teacher,model_school_info,school_management.group_school_teacher,1,0,0,0
+access_school_info_accountant,school.info.accountant,model_school_info,school_management.group_school_accountant,1,0,0,0
+access_school_info_student,school.info.student,model_school_info,school_management.group_school_student,1,0,0,0

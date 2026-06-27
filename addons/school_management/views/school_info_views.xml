@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Tree View -->
+    <record id="view_school_info_tree" model="ir.ui.view">
+        <field name="name">school.info.tree</field>
+        <field name="model">school.info</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="school_type"/>
+                <field name="phone"/>
+                <field name="email"/>
+                <field name="principal_id"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_school_info_form" model="ir.ui.view">
+        <field name="name">school.info.form</field>
+        <field name="model">school.info</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <field name="logo" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="School Name"/></h1>
+                        <h2><field name="tagline" placeholder="Motto / Tagline"/></h2>
+                    </div>
+                    <group>
+                        <group string="Identity">
+                            <field name="code"/>
+                            <field name="school_type"/>
+                            <field name="affiliation_board"/>
+                            <field name="registration_no"/>
+                            <field name="established_year"/>
+                        </group>
+                        <group string="Leadership">
+                            <field name="principal_id"/>
+                            <field name="vice_principal_id"/>
+                            <field name="total_capacity"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Contact">
+                            <group>
+                                <group string="Phone &amp; Email">
+                                    <field name="phone"/>
+                                    <field name="mobile"/>
+                                    <field name="email"/>
+                                    <field name="website"/>
+                                </group>
+                                <group string="Address">
+                                    <field name="street"/>
+                                    <field name="street2"/>
+                                    <field name="city"/>
+                                    <field name="state_id"/>
+                                    <field name="country_id"/>
+                                    <field name="zip"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Academic Calendar">
+                            <group>
+                                <field name="academic_year"/>
+                                <field name="session_start"/>
+                                <field name="session_end"/>
+                            </group>
+                        </page>
+                        <page string="Notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_school_info" model="ir.actions.act_window">
+        <field name="name">School Information</field>
+        <field name="res_model">school.info</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>
