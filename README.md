@@ -87,7 +87,7 @@ docker-compose down
 ### Upgrade + start with live logs
 
 ```bash
-docker-compose run --rm odoo odoo -u school_management,school_user_management -d your_db_name --stop-after-init && docker-compose up
+docker-compose run --rm odoo odoo -u school_management,school_user_management --stop-after-init && docker-compose up
 ```
 
 ### Upgrade only (no server start)

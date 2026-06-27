@@ -11,8 +11,8 @@
 | Phase | What | Models | Views | Concept |
 |-------|------|--------|-------|---------|
 | 0 | Docker setup | — | — | addon path, dev mode |
-| 0.5 | OCA check | — | — | `base_user_role` absent in 16.0 → skip |
-| 1 | Module scaffold + school info | `school.info` | form, tree | manifest, first model, security CSV |
+| 0.5 | OCA check | — | — | `base_user_role` present in 16.0 via extra-addons ✅ |
+| 1 | Module scaffold + school info | `school.info` | form (tabbed), tree | manifest, first model, security CSV, mail.thread mixin |
 | 1.5 | Security groups | — | groups.xml, CSV | `res.groups`, implied groups, menu/view `groups=` |
 | 1.6 | User extension | `res.users` extend | School tab on user form | `_inherit`, M2M write ops `(3,id)/(4,id)` |
 | 1.7 | Standalone app | `school.role` | form+tree+kanban | multi-module, `application: True`, home screen |

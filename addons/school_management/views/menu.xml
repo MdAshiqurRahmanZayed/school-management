@@ -8,12 +8,20 @@
         sequence="10"
         web_icon="school_management,static/description/icon.svg"/>
 
-    <!-- Configuration — admin only, grows each phase -->
+    <!-- Configuration — admin + principal -->
     <menuitem
         id="menu_school_config"
         name="Configuration"
         parent="menu_school_root"
-        groups="school_management.group_school_admin"
+        groups="school_management.group_school_admin,school_management.group_school_principal"
         sequence="100"/>
 
+    <!-- School Info under Configuration -->
+    <menuitem
+        id="menu_school_info"
+        name="School Information"
+        parent="menu_school_config"
+        action="school_management.action_school_info"
+        groups="school_management.group_school_admin,school_management.group_school_principal"
+        sequence="1"/>
 </odoo>
