@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Module category -->
+    <record id="module_category_school" model="ir.module.category">
+        <field name="name">School Management</field>
+        <field name="sequence">10</field>
+    </record>
+
+    <!-- Student — base level, read own records -->
+    <record id="group_school_student" model="res.groups">
+        <field name="name">Student</field>
+        <field name="category_id" ref="module_category_school"/>
+    </record>
+
+    <!-- Teacher — implies Student -->
+    <record id="group_school_teacher" model="res.groups">
+        <field name="name">Teacher</field>
+        <field name="category_id" ref="module_category_school"/>
+        <field name="implied_ids" eval="[(4, ref('group_school_student'))]"/>
+    </record>
+
+    <!-- Accountant — implies Student, parallel to Teacher -->
+    <record id="group_school_accountant" model="res.groups">
+        <field name="name">Accountant</field>
+        <field name="category_id" ref="module_category_school"/>
+        <field name="implied_ids" eval="[(4, ref('group_school_student'))]"/>
+    </record>
+
+    <!-- Principal — implies Teacher -->
+    <record id="group_school_principal" model="res.groups">
+        <field name="name">Principal</field>
+        <field name="category_id" ref="module_category_school"/>
+        <field name="implied_ids" eval="[(4, ref('group_school_teacher'))]"/>
+    </record>
+
+    <!-- Administrator — implies Principal (and all above) -->
+    <record id="group_school_admin" model="res.groups">
+        <field name="name">Administrator</field>
+        <field name="category_id" ref="module_category_school"/>
+        <field name="implied_ids" eval="[(4, ref('group_school_principal'))]"/>
+    </record>
+
+</odoo>

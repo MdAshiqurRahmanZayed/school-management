@@ -1,0 +1,22 @@
+# OCA and third-party modules — clone locally, not tracked
+extra-addons/
+
+# Odoo runtime
+*.pyc
+__pycache__/
+.odoo_upgrade
+
+# Docker volumes (if mapped locally)
+odoo-data/
+db-data/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+config/*

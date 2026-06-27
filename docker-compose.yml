@@ -1,0 +1,15 @@
+services:
+  odoo:
+    image: odoo:16.0
+    ports:
+      - "8069:8069"
+    volumes:
+      - ./addons:/mnt/custom-addons
+      - ./extra-addons:/mnt/extra-addons
+      - odoo_data:/var/lib/odoo
+      - ./config/odoo.conf:/etc/odoo/odoo.conf
+    command: odoo --dev=all
+    restart: on-failure
+
+volumes:
+  odoo_data:

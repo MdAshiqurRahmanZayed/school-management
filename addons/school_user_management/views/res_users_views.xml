@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Action: Users list for school user management -->
+    <record id="action_school_users" model="ir.actions.act_window">
+        <field name="name">School Users</field>
+        <field name="res_model">res.users</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('share', '=', False)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add your first school user
+            </p>
+            <p>
+                Create a user, then assign them a Role from the Roles tab.
+                Their permission groups are set automatically.
+            </p>
+        </field>
+    </record>
+
+</odoo>

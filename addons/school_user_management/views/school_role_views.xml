@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <!-- School-scoped action: shows only roles with school groups -->
+    <record id="action_school_roles" model="ir.actions.act_window">
+        <field name="name">School Roles</field>
+        <field name="res_model">res.users.role</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a school role
+            </p>
+            <p>
+                Roles control what teachers, students, and staff can see and do.
+                Assign permission groups to a role, then assign the role to users.
+            </p>
+        </field>
+    </record>
+
+    <!-- Extend role search: add school group filters -->
+    <record id="view_res_users_role_search_school" model="ir.ui.view">
+        <field name="name">res.users.role.search.school</field>
+        <field name="model">res.users.role</field>
+        <field name="inherit_id" ref="base_user_role.view_res_users_role_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <separator/>
+                <filter string="School Roles"
+                    name="filter_school_roles"
+                    domain="[('implied_ids.category_id.name', '=', 'School Management')]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Extend role form: highlight school groups section -->
+    <record id="view_res_users_role_form_school" model="ir.ui.view">
+        <field name="name">res.users.role.form.school</field>
+        <field name="model">res.users.role</field>
+        <field name="inherit_id" ref="base_user_role.view_res_users_role_form"/>
+        <field name="arch" type="xml">
+            <!-- Add school groups hint below implied_ids -->
+            <xpath expr="//field[@name='implied_ids']" position="after">
+                <div class="alert alert-info mt-2" role="alert">
+                    <strong>School permission groups:</strong>
+                    Add one of the School Management groups to control access.
+                    Each group implies all lower groups automatically.
+                    <br/>
+                    <code>Administrator → Principal → Teacher → Student</code>
+                    <br/>
+                    <code>Accountant → Student</code>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

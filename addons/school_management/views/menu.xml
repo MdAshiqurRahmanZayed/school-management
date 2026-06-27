@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Root app menu — shows as tile on home screen -->
+    <menuitem
+        id="menu_school_root"
+        name="School"
+        sequence="10"
+        web_icon="school_management,static/description/icon.svg"/>
+
+    <!-- Configuration — admin only, grows each phase -->
+    <menuitem
+        id="menu_school_config"
+        name="Configuration"
+        parent="menu_school_root"
+        groups="school_management.group_school_admin"
+        sequence="100"/>
+
+</odoo>

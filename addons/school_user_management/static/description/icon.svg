@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <!-- Background rounded square -->
+  <rect width="128" height="128" rx="18" ry="18" fill="#1B6B3A"/>
+
+  <!-- Person head -->
+  <circle cx="64" cy="38" r="18" fill="white"/>
+
+  <!-- Person body / shoulders -->
+  <path d="M30,95 Q30,68 64,68 Q98,68 98,95" fill="white"/>
+
+  <!-- Shield overlay bottom right -->
+  <path d="M80,72 L98,80 L98,96 Q98,108 80,114 Q62,108 62,96 L62,80 Z" fill="#1B6B3A" stroke="white" stroke-width="3"/>
+
+  <!-- Checkmark inside shield -->
+  <polyline points="70,94 77,101 92,84" fill="none" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

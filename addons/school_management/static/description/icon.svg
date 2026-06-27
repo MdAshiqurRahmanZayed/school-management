@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <!-- Background rounded square -->
+  <rect width="128" height="128" rx="18" ry="18" fill="#2E86AB"/>
+
+  <!-- School building -->
+  <!-- Main building body -->
+  <rect x="24" y="58" width="80" height="48" rx="2" fill="white"/>
+
+  <!-- Roof / triangle top -->
+  <polygon points="64,20 16,58 112,58" fill="white"/>
+
+  <!-- Door -->
+  <rect x="52" y="80" width="24" height="26" rx="2" fill="#2E86AB"/>
+
+  <!-- Windows -->
+  <rect x="30" y="66" width="16" height="14" rx="2" fill="#2E86AB"/>
+  <rect x="82" y="66" width="16" height="14" rx="2" fill="#2E86AB"/>
+
+  <!-- Flag pole -->
+  <rect x="62" y="24" width="4" height="18" fill="#2E86AB"/>
+
+  <!-- Chimney / bell tower hint -->
+  <rect x="58" y="14" width="12" height="10" rx="2" fill="white"/>
+</svg>

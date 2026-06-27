@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="role_school_admin" model="res.users.role">
+        <field name="name">School Administrator</field>
+        <field name="implied_ids" eval="[(4, ref('school_management.group_school_admin'))]"/>
+    </record>
+
+    <record id="role_school_principal" model="res.users.role">
+        <field name="name">Principal</field>
+        <field name="implied_ids" eval="[(4, ref('school_management.group_school_principal'))]"/>
+    </record>
+
+    <record id="role_school_teacher" model="res.users.role">
+        <field name="name">Teacher</field>
+        <field name="implied_ids" eval="[(4, ref('school_management.group_school_teacher'))]"/>
+    </record>
+
+    <record id="role_school_accountant" model="res.users.role">
+        <field name="name">Accountant</field>
+        <field name="implied_ids" eval="[(4, ref('school_management.group_school_accountant'))]"/>
+    </record>
+
+    <record id="role_school_student" model="res.users.role">
+        <field name="name">Student</field>
+        <field name="implied_ids" eval="[(4, ref('school_management.group_school_student'))]"/>
+    </record>
+
+</odoo>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- App root — tile on home screen -->
+    <menuitem
+        id="menu_school_user_mgmt_root"
+        name="School Users"
+        sequence="11"
+        web_icon="school_user_management,static/description/icon.svg"
+        groups="school_management.group_school_admin"/>
+
+    <!-- Role Management -->
+    <menuitem
+        id="menu_school_roles_section"
+        name="Role Management"
+        parent="menu_school_user_mgmt_root"
+        sequence="10"/>
+
+    <menuitem
+        id="menu_school_roles_list"
+        name="Roles"
+        parent="menu_school_roles_section"
+        action="school_user_management.action_school_roles"
+        sequence="10"/>
+
+    <!-- User Management -->
+    <menuitem
+        id="menu_school_users_section"
+        name="User Management"
+        parent="menu_school_user_mgmt_root"
+        sequence="20"/>
+
+    <menuitem
+        id="menu_school_users_list"
+        name="Users"
+        parent="menu_school_users_section"
+        action="school_user_management.action_school_users"
+        sequence="10"/>
+
+</odoo>
