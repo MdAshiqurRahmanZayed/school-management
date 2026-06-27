@@ -120,28 +120,3 @@ docker logs school-management-odoo-1         # stopped container
 |-----|---------|
 | `http://localhost:8069` | Normal |
 | `http://localhost:8069/web?debug=1` | Dev mode (technical menu, field names) |
-
----
-
-## Installed modules
-
-| Module | Purpose |
-|--------|---------|
-| `web_responsive` | Hamburger menu, mobile-friendly UI |
-| `base_user_role` | Dynamic role engine (`res.users.role`) |
-| `school_management` | Core school module — groups, models, views |
-| `school_user_management` | Role & user management app |
-
-Install order: `web_responsive → base_user_role → school_management → school_user_management`
-
----
-
-## Troubleshooting
-
-| Problem | Fix |
-|---------|-----|
-| `service "odoo" is not running` | Use `docker-compose run --rm` or start with `docker-compose up -d` first |
-| `KeyError: 'ir.http'` | DB not initialized — run `-i` install command |
-| `External ID not found` | Wrong load order in `__manifest__.py` — actions must load before menus |
-| Container keeps restarting | `docker logs school-management-odoo-1` to see crash reason |
-| Can't connect to DB | Use `host.docker.internal` as `db_host` if DB runs on Mac host |
