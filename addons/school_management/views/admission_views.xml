@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_school_admission" model="ir.actions.act_window">
+        <field name="name">Admissions</field>
+        <field name="res_model">school.admission</field>
+        <field name="view_mode">kanban,tree,form,graph</field>
+    </record>
+
+    <!-- Tree -->
+    <record id="view_school_admission_tree" model="ir.ui.view">
+        <field name="name">school.admission.tree</field>
+        <field name="model">school.admission</field>
+        <field name="arch" type="xml">
+            <tree string="Admissions"
+                  decoration-success="state == 'admitted'"
+                  decoration-danger="state == 'rejected'"
+                  decoration-muted="state == 'draft'">
+                <field name="application_no"/>
+                <field name="student_name"/>
+                <field name="gender"/>
+                <field name="applied_class"/>
+                <field name="application_date"/>
+                <field name="guardian_name"/>
+                <field name="phone"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'submitted'"
+                       decoration-warning="state == 'under_review'"
+                       decoration-success="state == 'admitted'"
+                       decoration-danger="state == 'rejected'"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Kanban — pipeline grouped by state, drag-and-drop between columns -->
+    <record id="view_school_admission_kanban" model="ir.ui.view">
+        <field name="name">school.admission.kanban</field>
+        <field name="model">school.admission</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" group_create="false">
+                <field name="photo"/>
+                <field name="application_no"/>
+                <field name="student_name"/>
+                <field name="applied_class"/>
+                <field name="application_date"/>
+                <field name="state"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card oe_kanban_global_click">
+                            <div class="o_kanban_image">
+                                <img t-att-src="record.photo.raw_value ? 'data:image/png;base64,' + record.photo.raw_value : '/web/static/img/placeholder.png'"
+                                     alt="Photo" class="o_image_64_max"/>
+                            </div>
+                            <div class="oe_kanban_details">
+                                <strong class="o_kanban_record_title">
+                                    <field name="student_name"/>
+                                </strong>
+                                <div class="text-muted small">
+                                    <field name="application_no"/>
+                                </div>
+                                <div>Class: <field name="applied_class"/></div>
+                                <div class="text-muted small">
+                                    <field name="application_date"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Form -->
+    <record id="view_school_admission_form" model="ir.ui.view">
+        <field name="name">school.admission.form</field>
+        <field name="model">school.admission</field>
+        <field name="arch" type="xml">
+            <form string="Admission Application">
+                <header>
+                    <button name="action_submit" string="Submit" type="object"
+                            class="btn-primary"
+                            attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                    <button name="action_review" string="Under Review" type="object"
+                            attrs="{'invisible': [('state', '!=', 'submitted')]}"/>
+                    <button name="action_admit" string="Admit" type="object"
+                            class="btn-success"
+                            groups="school_management.group_school_admin,school_management.group_school_principal"
+                            attrs="{'invisible': [('state', '!=', 'under_review')]}"/>
+                    <button name="action_reject" string="Reject" type="object"
+                            class="btn-danger"
+                            groups="school_management.group_school_admin,school_management.group_school_principal"
+                            attrs="{'invisible': [('state', 'not in', ['submitted','under_review'])]}"/>
+                    <button name="action_reset_draft" string="Reset to Draft" type="object"
+                            groups="school_management.group_school_admin"
+                            attrs="{'invisible': [('state', 'in', ['draft','admitted'])]}"/>
+                    <button name="action_create_user" string="Create User" type="object"
+                            class="btn-primary"
+                            groups="school_management.group_school_admin,school_management.group_school_principal"
+                            attrs="{'invisible': ['|', ('state', '!=', 'admitted'), ('user_id', '!=', False)]}"/>
+                    <button name="action_create_student" string="Enroll as Student" type="object"
+                            class="btn-success"
+                            groups="school_management.group_school_admin,school_management.group_school_principal"
+                            attrs="{'invisible': ['|', ('user_id', '=', False), ('student_id', '!=', False)]}"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,submitted,under_review,admitted"/>
+                </header>
+                <sheet>
+                    <field name="photo" widget="image" class="oe_avatar"
+                           options="{'preview_image': 'photo'}"/>
+                    <div class="oe_title">
+                        <label for="student_name" class="oe_edit_only"/>
+                        <h1><field name="student_name" placeholder="Applicant Full Name"/></h1>
+                        <h2 class="text-muted">
+                            <field name="application_no" readonly="1"/>
+                        </h2>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="user_id" readonly="1"
+                                   attrs="{'invisible': [('user_id', '=', False)]}"/>
+                            <field name="student_id" readonly="1"
+                                   attrs="{'invisible': [('student_id', '=', False)]}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Applicant Information" name="applicant_info">
+                            <group string="Personal Details">
+                                <group>
+                                    <field name="gender"/>
+                                    <field name="date_of_birth"/>
+                                    <field name="age" readonly="1"/>
+                                </group>
+                                <group>
+                                    <field name="phone"/>
+                                    <field name="email" widget="email"/>
+                                </group>
+                            </group>
+                            <group string="Address">
+                                <field name="address" nolabel="1"
+                                       placeholder="Full Address"/>
+                            </group>
+                        </page>
+                        <page string="Guardian" name="guardian">
+                            <group>
+                                <group>
+                                    <field name="guardian_name"/>
+                                    <field name="guardian_phone"/>
+                                    <field name="guardian_relation"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Application" name="application">
+                            <group>
+                                <group>
+                                    <field name="applied_class"/>
+                                    <field name="application_date"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="notes" nolabel="1"
+                                   placeholder="Internal notes..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Graph -->
+    <record id="view_school_admission_graph" model="ir.ui.view">
+        <field name="name">school.admission.graph</field>
+        <field name="model">school.admission</field>
+        <field name="arch" type="xml">
+            <graph string="Admissions" type="bar">
+                <field name="state" type="row"/>
+                <field name="application_date" interval="month" type="col"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Search -->
+    <record id="view_school_admission_search" model="ir.ui.view">
+        <field name="name">school.admission.search</field>
+        <field name="model">school.admission</field>
+        <field name="arch" type="xml">
+            <search string="Admissions">
+                <field name="student_name"/>
+                <field name="application_no"/>
+                <field name="applied_class"/>
+                <field name="guardian_name"/>
+                <filter string="Draft" name="draft"
+                        domain="[('state','=','draft')]"/>
+                <filter string="Submitted" name="submitted"
+                        domain="[('state','=','submitted')]"/>
+                <filter string="Under Review" name="under_review"
+                        domain="[('state','=','under_review')]"/>
+                <filter string="Admitted" name="admitted"
+                        domain="[('state','=','admitted')]"/>
+                <filter string="Rejected" name="rejected"
+                        domain="[('state','=','rejected')]"/>
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter string="Status" name="group_state"
+                            context="{'group_by': 'state'}"/>
+                    <filter string="Class" name="group_class"
+                            context="{'group_by': 'applied_class'}"/>
+                    <filter string="Month" name="group_month"
+                            context="{'group_by': 'application_date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+</odoo>

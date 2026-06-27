@@ -51,11 +51,25 @@ class SchoolInfo(models.Model):
     session_end = fields.Date(string="Session End")
 
     # --- Leadership ---
-    principal_id = fields.Many2one("res.users", string="Principal")
-    vice_principal_id = fields.Many2one("res.users", string="Vice Principal")
+    principal_id = fields.Many2one(
+        "res.users",
+        string="Principal",
+        domain=lambda self: self._principal_domain(),
+    )
+    vice_principal_id = fields.Many2one(
+        "res.users",
+        string="Vice Principal",
+        domain=lambda self: self._principal_domain(),
+    )
 
     # --- Capacity ---
     total_capacity = fields.Integer(string="Total Student Capacity")
+
+    def _principal_domain(self):
+        group = self.env.ref("school_management.group_school_principal", raise_if_not_found=False)
+        if not group:
+            return []
+        return [("groups_id", "in", [group.id])]
 
     # --- Meta ---
     active = fields.Boolean(string="Active", default=True)

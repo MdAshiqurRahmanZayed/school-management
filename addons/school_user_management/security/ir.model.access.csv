@@ -1,1 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_res_users_principal,res.users.school.principal,base.model_res_users,school_management.group_school_principal,1,1,1,0
+access_res_groups_principal,res.groups.school.principal,base.model_res_groups,school_management.group_school_principal,1,0,0,0
+access_res_users_role_principal,res.users.role.principal,base_user_role.model_res_users_role,school_management.group_school_principal,1,0,0,0
+access_res_users_role_admin,res.users.role.admin,base_user_role.model_res_users_role,school_management.group_school_admin,1,1,1,1

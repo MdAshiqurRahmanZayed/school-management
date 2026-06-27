@@ -4,3 +4,14 @@ access_school_info_principal,school.info.principal,model_school_info,school_mana
 access_school_info_teacher,school.info.teacher,model_school_info,school_management.group_school_teacher,1,0,0,0
 access_school_info_accountant,school.info.accountant,model_school_info,school_management.group_school_accountant,1,0,0,0
 access_school_info_student,school.info.student,model_school_info,school_management.group_school_student,1,0,0,0
+access_school_teacher_admin,school.teacher.admin,model_school_teacher,school_management.group_school_admin,1,1,1,1
+access_school_teacher_principal,school.teacher.principal,model_school_teacher,school_management.group_school_principal,1,1,1,1
+access_school_teacher_teacher,school.teacher.teacher,model_school_teacher,school_management.group_school_teacher,1,0,0,0
+access_school_student_admin,school.student.admin,model_school_student,school_management.group_school_admin,1,1,1,1
+access_school_student_principal,school.student.principal,model_school_student,school_management.group_school_principal,1,1,1,1
+access_school_student_teacher,school.student.teacher,model_school_student,school_management.group_school_teacher,1,0,0,0
+access_school_student_accountant,school.student.accountant,model_school_student,school_management.group_school_accountant,1,0,0,0
+access_school_student_student,school.student.student,model_school_student,school_management.group_school_student,1,0,0,0
+access_school_admission_admin,school.admission.admin,model_school_admission,school_management.group_school_admin,1,1,1,1
+access_school_admission_principal,school.admission.principal,model_school_admission,school_management.group_school_principal,1,1,1,1
+access_school_admission_teacher,school.admission.teacher,model_school_admission,school_management.group_school_teacher,1,0,0,0

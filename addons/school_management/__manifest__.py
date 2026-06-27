@@ -9,7 +9,11 @@
     "data": [
         "security/groups.xml",
         "security/ir.model.access.csv",
+        "data/sequences.xml",
         "views/school_info_views.xml",
+        "views/teacher_views.xml",
+        "views/student_views.xml",
+        "views/admission_views.xml",
         "views/menu.xml",
     ],
     "installable": True,
