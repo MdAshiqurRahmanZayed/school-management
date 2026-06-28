@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_school_course" model="ir.actions.act_window">
+        <field name="name">Courses</field>
+        <field name="res_model">school.course</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Tree -->
+    <record id="view_school_course_tree" model="ir.ui.view">
+        <field name="name">school.course.tree</field>
+        <field name="model">school.course</field>
+        <field name="arch" type="xml">
+            <tree string="Courses">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="teacher_count"/>
+                <field name="assignment_count"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form -->
+    <record id="view_school_course_form" model="ir.ui.view">
+        <field name="name">school.course.form</field>
+        <field name="model">school.course</field>
+        <field name="arch" type="xml">
+            <form string="Course">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="%(action_school_assignment)d" type="action"
+                                class="oe_stat_button" icon="fa-file-text-o"
+                                context="{'search_default_course_id': active_id}">
+                            <field name="assignment_count" widget="statinfo" string="Assignments"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1><field name="name" placeholder="e.g. Mathematics"/></h1>
+                        <h2 class="text-muted">
+                            <field name="code" placeholder="Code"/>
+                        </h2>
+                    </div>
+                    <notebook>
+                        <page string="Description" name="description">
+                            <field name="description" nolabel="1"
+                                   placeholder="Brief course description..."/>
+                        </page>
+                        <page string="Teachers" name="teachers">
+                            <field name="teacher_ids">
+                                <tree>
+                                    <field name="employee_id"/>
+                                    <field name="name"/>
+                                    <field name="specialization"/>
+                                    <field name="phone"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Classes" name="classes">
+                            <field name="class_ids" readonly="1">
+                                <tree>
+                                    <field name="full_name"/>
+                                    <field name="academic_year_id"/>
+                                    <field name="class_teacher_id"/>
+                                    <field name="student_count"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Assignments" name="assignments">
+                            <field name="assignment_ids" readonly="1">
+                                <tree>
+                                    <field name="assignment_id"/>
+                                    <field name="name"/>
+                                    <field name="class_id"/>
+                                    <field name="due_date"/>
+                                    <field name="state" widget="badge"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search -->
+    <record id="view_school_course_search" model="ir.ui.view">
+        <field name="name">school.course.search</field>
+        <field name="model">school.course</field>
+        <field name="arch" type="xml">
+            <search string="Courses">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="teacher_ids"/>
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter string="Code" name="group_code"
+                            context="{'group_by': 'code'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+</odoo>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <record id="g" model="ir.actions.act_window">
+    <record id="action_school_teacher" model="ir.actions.act_window">
         <field name="name">Teachers</field>
         <field name="res_model">school.teacher</field>
         <field name="view_mode">kanban,tree,form</field>
@@ -95,8 +95,7 @@
                             class="btn-primary"
                             groups="school_management.group_school_admin,school_management.group_school_principal"
                             attrs="{'invisible': [('user_id', '!=', False)]}"/>
-                    <field name="state" widget="statusbar"
-                           statusbar_visible="active,on_leave,resigned,terminated"/>
+                    <field name="state" widget="statusbar"/>
                 </header>
                 <sheet>
                     <field name="photo" widget="image" class="oe_avatar"
