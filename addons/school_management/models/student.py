@@ -56,6 +56,13 @@ class SchoolStudent(models.Model):
         ],
         string="Guardian Relation",
     )
+    class_ids = fields.Many2many(
+        comodel_name="school.class",
+        relation="school_class_student_rel",
+        column1="student_id",
+        column2="class_id",
+        string="Classes",
+    )
     enrollment_date = fields.Date(
         string="Enrollment Date",
         default=fields.Date.today,

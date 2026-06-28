@@ -14,6 +14,7 @@
         sequence="10"
         web_icon="school_management,static/description/icon.svg"/>
 
+    <!-- People -->
     <menuitem
         id="menu_school_teacher"
         name="Teachers"
@@ -38,6 +39,87 @@
         groups="school_management.group_school_teacher"
         sequence="30"/>
 
+    <!-- Academic section — teachers and above -->
+    <menuitem
+        id="menu_school_academic"
+        name="Academic"
+        parent="menu_school_root"
+        groups="school_management.group_school_teacher"
+        sequence="40"/>
+
+    <menuitem
+        id="menu_school_class"
+        name="Classes"
+        parent="menu_school_academic"
+        action="school_management.action_school_class"
+        groups="school_management.group_school_teacher"
+        sequence="10"/>
+
+    <menuitem
+        id="menu_school_course"
+        name="Courses"
+        parent="menu_school_academic"
+        action="school_management.action_school_course"
+        groups="school_management.group_school_teacher"
+        sequence="20"/>
+
+    <menuitem
+        id="menu_school_assignment"
+        name="Assignments"
+        parent="menu_school_academic"
+        action="school_management.action_school_assignment"
+        groups="school_management.group_school_teacher"
+        sequence="30"/>
+
+    <menuitem
+        id="menu_school_assignment_submission"
+        name="Submissions"
+        parent="menu_school_academic"
+        action="school_management.action_school_assignment_submission"
+        groups="school_management.group_school_teacher"
+        sequence="40"/>
+
+    <!-- My Class section — students (teachers inherit this group too) -->
+    <menuitem
+        id="menu_school_my_class"
+        name="My Class"
+        parent="menu_school_root"
+        groups="school_management.group_school_student"
+        sequence="50"/>
+
+    <menuitem
+        id="menu_school_my_class_info"
+        name="My Class"
+        parent="menu_school_my_class"
+        action="school_management.action_school_class"
+        groups="school_management.group_school_student"
+        sequence="10"/>
+
+    <menuitem
+        id="menu_school_my_courses"
+        name="My Courses"
+        parent="menu_school_my_class"
+        action="school_management.action_school_course"
+        groups="school_management.group_school_student"
+        sequence="20"/>
+
+    <menuitem
+        id="menu_school_my_assignments"
+        name="My Assignments"
+        parent="menu_school_my_class"
+        action="school_management.action_school_assignment_my"
+        groups="school_management.group_school_student"
+        sequence="30"/>
+
+    <menuitem
+        id="menu_school_my_submissions"
+        name="My Submissions"
+        parent="menu_school_my_class"
+        action="school_management.action_school_assignment_submission_my"
+        groups="school_management.group_school_student"
+        sequence="40"/>
+
+    <!-- School Information -->
     <menuitem
         id="menu_school_info"
         name="School Information"
@@ -45,4 +127,34 @@
         action="school_management.action_school_info"
         groups="school_management.group_school_admin,school_management.group_school_principal"
         sequence="90"/>
+
+    <!-- Configuration — admin and principal only -->
+    <menuitem
+        id="menu_school_configuration"
+        name="Configuration"
+        parent="menu_school_root"
+        groups="school_management.group_school_admin,school_management.group_school_principal"
+        sequence="100"/>
+
+    <menuitem
+        id="menu_school_academic_years"
+        name="Academic Years"
+        parent="menu_school_configuration"
+        action="school_management.action_school_academic_year"
+        sequence="10"/>
+
+    <menuitem
+        id="menu_school_sections"
+        name="Sections"
+        parent="menu_school_configuration"
+        action="school_management.action_school_section"
+        sequence="20"/>
+
+    <menuitem
+        id="menu_school_classrooms"
+        name="Classrooms"
+        parent="menu_school_configuration"
+        action="school_management.action_school_classroom"
+        sequence="30"/>
+
 </odoo>

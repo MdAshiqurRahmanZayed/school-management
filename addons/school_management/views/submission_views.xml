@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_school_assignment_submission" model="ir.actions.act_window">
+        <field name="name">Submissions</field>
+        <field name="res_model">school.assignment.submission</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- My Submissions action (student view — record rule filters by student.user_id) -->
+    <record id="action_school_assignment_submission_my" model="ir.actions.act_window">
+        <field name="name">My Submissions</field>
+        <field name="res_model">school.assignment.submission</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Tree -->
+    <record id="view_school_assignment_submission_tree" model="ir.ui.view">
+        <field name="name">school.assignment.submission.tree</field>
+        <field name="model">school.assignment.submission</field>
+        <field name="arch" type="xml">
+            <tree string="Submissions"
+                  decoration-muted="state == 'draft'"
+                  decoration-success="state == 'graded'">
+                <field name="student_id"/>
+                <field name="assignment_id"/>
+                <field name="course_id"/>
+                <field name="class_id"/>
+                <field name="submitted_on"/>
+                <field name="marks_obtained"
+                       groups="school_management.group_school_teacher"/>
+                <field name="max_marks"
+                       groups="school_management.group_school_teacher"/>
+                <field name="grade" widget="badge"
+                       groups="school_management.group_school_teacher"
+                       decoration-success="grade in ['A','B']"
+                       decoration-warning="grade in ['C','D']"
+                       decoration-danger="grade == 'F'"/>
+                <field name="state" widget="badge"
+                       decoration-muted="state == 'draft'"
+                       decoration-warning="state == 'submitted'"
+                       decoration-success="state == 'graded'"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form -->
+    <record id="view_school_assignment_submission_form" model="ir.ui.view">
+        <field name="name">school.assignment.submission.form</field>
+        <field name="model">school.assignment.submission</field>
+        <field name="arch" type="xml">
+            <form string="Submission">
+                <header>
+                    <button name="action_submit" string="Submit" type="object"
+                            class="btn-primary"
+                            attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                    <button name="action_mark_graded" string="Mark Graded" type="object"
+                            class="btn-success"
+                            groups="school_management.group_school_teacher"
+                            attrs="{'invisible': [('state', '!=', 'submitted')]}"/>
+                    <button name="action_reset_draft" string="Reset to Draft" type="object"
+                            groups="school_management.group_school_teacher"
+                            attrs="{'invisible': [('state', '==', 'draft')]}"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,submitted,graded"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group string="Assignment">
+                            <field name="assignment_id"
+                                   attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="course_id" readonly="1"/>
+                            <field name="class_id" readonly="1"/>
+                            <field name="academic_year_id" readonly="1"/>
+                        </group>
+                        <group string="Student">
+                            <field name="is_student_user" invisible="1"/>
+                            <field name="student_id"
+                                   attrs="{'readonly': [('is_student_user', '=', True)]}"/>
+                            <field name="submitted_on" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Answer" name="answer">
+                            <field name="answer_text"
+                                   attrs="{'readonly': [('state', '!=', 'draft')]}"
+                                   placeholder="Write your answer here..."/>
+                            <field name="attachment_ids" widget="many2many_binary"
+                                   attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        </page>
+                        <page string="Grading" name="grading"
+                              groups="school_management.group_school_teacher">
+                            <group>
+                                <group>
+                                    <field name="max_marks" readonly="1"/>
+                                    <field name="marks_obtained"
+                                           attrs="{'readonly': [('state', 'not in', ['submitted', 'graded'])]}"/>
+                                </group>
+                                <group>
+                                    <field name="percentage" readonly="1"/>
+                                    <field name="grade" readonly="1"/>
+                                </group>
+                            </group>
+                            <group>
+                                <field name="graded_by"/>
+                                <field name="remarks"
+                                       placeholder="Teacher remarks..."/>
+                            </group>
+                        </page>
+                    </notebook>
+                    <!-- Result summary — visible to all when graded -->
+                    <group string="Result"
+                           attrs="{'invisible': [('state', '!=', 'graded')]}">
+                        <group>
+                            <field name="percentage" readonly="1"/>
+                            <field name="grade" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="remarks" readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search -->
+    <record id="view_school_assignment_submission_search" model="ir.ui.view">
+        <field name="name">school.assignment.submission.search</field>
+        <field name="model">school.assignment.submission</field>
+        <field name="arch" type="xml">
+            <search string="Submissions">
+                <field name="student_id"/>
+                <field name="assignment_id"/>
+                <field name="course_id"/>
+                <field name="class_id"/>
+                <filter string="Draft" name="draft"
+                        domain="[('state', '=', 'draft')]"/>
+                <filter string="Submitted" name="submitted"
+                        domain="[('state', '=', 'submitted')]"/>
+                <filter string="Graded" name="graded"
+                        domain="[('state', '=', 'graded')]"/>
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter string="Assignment" name="group_assignment"
+                            context="{'group_by': 'assignment_id'}"/>
+                    <filter string="Student" name="group_student"
+                            context="{'group_by': 'student_id'}"/>
+                    <filter string="Status" name="group_state"
+                            context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+</odoo>
